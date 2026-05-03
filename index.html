@@ -970,6 +970,7 @@ let gesture = { x:0, y:0, velocity:0 }, lastPos = { x:0, y:0 };
 let windSound, rainSound, thunderSound, birdSound;
 let currentAmbience = null;
 let targetVolume = 0.7, smoothedVolume = 0.7;
+let ambienceLockedVolume = 0.7;
 
 // SFX audio
 let dogSound, doorSound, footstepsSound, guzhenSound;
@@ -1552,8 +1553,9 @@ function tickVolume() {
   const v = Math.max(0, Math.min(1, smoothedVolume));
   if (currentLayer === "ambience" && currentAmbience) {
     currentAmbience.volume = v;
-  } else if (currentLayer === "sfx" && lastSFXPlaying) {
-    lastSFXPlaying.volume = v;
+  } else if (currentLayer === "sfx") {
+    if (currentAmbience) currentAmbience.volume = ambienceLockedVolume;
+    if (lastSFXPlaying) lastSFXPlaying.volume = v;
   }
   const pct = Math.round(v * 100);
   document.getElementById("vol-fill").style.height = pct + "%";
@@ -1760,6 +1762,7 @@ function checkLayerSwitch(soundHand, volumeHand) {
 
   if (dirA === "up" && dirB === "up" && currentLayer === "ambience") {
     currentLayer = "sfx";
+    ambienceLockedVolume = currentAmbience ? currentAmbience.volume : smoothedVolume;
     lastLayerSwitchTime = now;
     lastTriggeredSFX = null;
     // 切到 SFX 层时停止所有 ambience 音效并重置状态
