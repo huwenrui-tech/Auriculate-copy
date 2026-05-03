@@ -1878,7 +1878,6 @@ function detectLoop() {
         playAmbience(targetSound);
       } else if (stableGesture === "fist") {
         statusText = "Silence";
-        stopAmbience();
         isVolumeLocked = false;
         lockedGesture = null;
         activeSoundGesture = null;
@@ -1931,7 +1930,6 @@ function detectLoop() {
   } else if (lms.length === 0) {
     statusEl.textContent = "Show your hands";
     if (!isVolumeLocked) {
-      stopAmbience();
       stopAllSFX();
       activeSoundGesture = null;
     }
