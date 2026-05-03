@@ -1763,7 +1763,6 @@ function checkLayerSwitch(soundHand, volumeHand) {
     lastLayerSwitchTime = now;
     lastTriggeredSFX = null;
     // 切到 SFX 层时停止所有 ambience 音效并重置状态
-    stopAmbience();
     isVolumeLocked = false;
     lockedGesture = null;
     activeSoundGesture = null;
