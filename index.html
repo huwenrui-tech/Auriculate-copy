@@ -1881,6 +1881,7 @@ function detectLoop() {
         playAmbience(targetSound);
       } else if (stableGesture === "fist") {
         statusText = "Silence";
+        stopAmbience();
         isVolumeLocked = false;
         lockedGesture = null;
         activeSoundGesture = null;
